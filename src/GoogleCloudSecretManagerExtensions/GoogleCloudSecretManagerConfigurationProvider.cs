@@ -5,14 +5,8 @@ namespace GoogleCloudSecretManagerExtensions;
 
 public class GoogleCloudSecretManagerConfigurationProvider : ConfigurationProvider, IDisposable
 {
-    private readonly CancellationTokenSource _cancellationToken;
+    private readonly CancellationTokenSource _cancellationToken = new();
     private bool _disposed;
-
-    public GoogleCloudSecretManagerConfigurationProvider()
-    {
-        _cancellationToken = new CancellationTokenSource();
-
-    }
 
     public void Dispose()
     {
