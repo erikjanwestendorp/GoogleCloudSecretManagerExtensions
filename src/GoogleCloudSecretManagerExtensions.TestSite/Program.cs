@@ -1,4 +1,8 @@
+using GoogleCloudSecretManagerExtensions.TestSite.Compose;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Compose();
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
