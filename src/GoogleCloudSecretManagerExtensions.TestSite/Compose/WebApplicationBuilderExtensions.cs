@@ -4,7 +4,9 @@ public static class WebApplicationBuilderExtensions
 {
     public static WebApplicationBuilder Compose(this WebApplicationBuilder builder)
     {
-        builder.Configuration.AddGoogleCloudSecretManager();
+        var projectId = "MyProjectId";
+
+        builder.Configuration.AddGoogleCloudSecretManager(projectId);
 
         return builder;
     }
