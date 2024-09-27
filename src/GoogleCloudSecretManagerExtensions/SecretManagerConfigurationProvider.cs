@@ -23,7 +23,10 @@ public class SecretManagerConfigurationProvider(string projectId) : Configuratio
                 var secretPayload = secretManagerClient.AccessSecretVersion(secretVersionName);
                 var secretData = secretPayload.Payload.Data.ToStringUtf8();
 
-                Data[secret.SecretName.SecretId] = secretData;
+                //TODO USE OPTIONS
+                var secretManager = SecretManager.Instance;
+                var key = secretManager.GetKey(secret);
+                Data[key] = secretData;
             }
             catch (Exception ex)
             {
