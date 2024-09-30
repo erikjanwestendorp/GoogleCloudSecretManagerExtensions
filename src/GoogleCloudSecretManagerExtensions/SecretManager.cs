@@ -5,7 +5,7 @@ namespace GoogleCloudSecretManagerExtensions;
 
 public class SecretManager
 {
-    internal static SecretManager Instance { get; } = new SecretManager();
+    internal static SecretManager Instance { get; } = new();
 
     public virtual string GetKey(Secret secret)
     {

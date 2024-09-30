@@ -14,7 +14,12 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder Compose(this WebApplicationBuilder builder)
     {
-        var projectId = "dogwood-concept-429614-j5";
+        var projectId = builder.Configuration.GetConfiguredInstance<AppSettings.SecretManager>(ProjectConstants.SettingsSections.SecretManager).ProjectId;
+        
+        if (string.IsNullOrWhiteSpace(projectId))
+        {
+            throw new InvalidOperationException("ProjectId is not configured in appsettings.json under 'SecretManager:ProjectId'.");
+        }
 
         builder.Configuration.AddGoogleCloudSecretManager(projectId);
 
