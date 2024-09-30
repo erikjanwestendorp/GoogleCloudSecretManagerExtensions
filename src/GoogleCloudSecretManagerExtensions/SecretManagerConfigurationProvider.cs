@@ -4,8 +4,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace GoogleCloudSecretManagerExtensions;
 
-public class SecretManagerConfigurationProvider(string projectId) : ConfigurationProvider
+public class SecretManagerConfigurationProvider(string projectId, SecretManagerConfigurationOptions options) : ConfigurationProvider
 {
+    private readonly SecretManager _secretManager = options.Manager;
+
     public override void Load()
     {
         var secretManagerClient = SecretManagerServiceClient.Create();
@@ -23,9 +25,7 @@ public class SecretManagerConfigurationProvider(string projectId) : Configuratio
                 var secretPayload = secretManagerClient.AccessSecretVersion(secretVersionName);
                 var secretData = secretPayload.Payload.Data.ToStringUtf8();
 
-                //TODO USE OPTIONS
-                var secretManager = SecretManager.Instance;
-                var key = secretManager.GetKey(secret);
+                var key = _secretManager.GetKey(secret);
                 Data[key] = secretData;
             }
             catch (Exception ex)

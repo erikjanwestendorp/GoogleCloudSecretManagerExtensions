@@ -2,10 +2,10 @@
 
 namespace GoogleCloudSecretManagerExtensions;
 
-public class SecretManagerConfigurationSource(string projectId) : IConfigurationSource
+public class SecretManagerConfigurationSource(string projectId, SecretManagerConfigurationOptions options) : IConfigurationSource
 {
     public IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        return new SecretManagerConfigurationProvider(projectId);
+        return new SecretManagerConfigurationProvider(projectId, options);
     }
 }
