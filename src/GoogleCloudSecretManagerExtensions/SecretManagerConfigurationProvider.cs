@@ -8,9 +8,11 @@ public class SecretManagerConfigurationProvider(string projectId, SecretManagerC
 {
     private readonly SecretManager _secretManager = options.Manager;
 
-    public override void Load()
+    public override void Load() => LoadAsync().GetAwaiter().GetResult();
+
+    private async Task LoadAsync()
     {
-        var secretManagerClient = SecretManagerServiceClient.Create();
+        var secretManagerClient = await SecretManagerServiceClient.CreateAsync();
 
         var secrets = secretManagerClient.ListSecrets(new ListSecretsRequest
         {
@@ -22,7 +24,7 @@ public class SecretManagerConfigurationProvider(string projectId, SecretManagerC
             try
             {
                 var secretVersionName = new SecretVersionName(projectId, secret.SecretName.SecretId, "latest");
-                var secretPayload = secretManagerClient.AccessSecretVersion(secretVersionName);
+                var secretPayload = await secretManagerClient.AccessSecretVersionAsync(secretVersionName);
                 var secretData = secretPayload.Payload.Data.ToStringUtf8();
 
                 var key = _secretManager.GetKey(secret);
