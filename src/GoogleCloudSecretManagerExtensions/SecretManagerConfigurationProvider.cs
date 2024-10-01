@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace GoogleCloudSecretManagerExtensions;
 
-public class SecretManagerConfigurationProvider(string projectId, SecretManagerConfigurationOptions options) : ConfigurationProvider
+public class SecretManagerConfigurationProvider(string projectId, SecretManagerConfigurationOptions options, SecretManagerServiceClient secretManagerServiceClient) : ConfigurationProvider
 {
     private readonly SecretManager _secretManager = options.Manager;
 
@@ -12,9 +12,7 @@ public class SecretManagerConfigurationProvider(string projectId, SecretManagerC
 
     private async Task LoadAsync()
     {
-        var secretManagerClient = await SecretManagerServiceClient.CreateAsync();
-
-        var secrets = secretManagerClient.ListSecrets(new ListSecretsRequest
+        var secrets = secretManagerServiceClient.ListSecrets(new ListSecretsRequest
         {
             ParentAsProjectName = new ProjectName(projectId)
         });
@@ -24,7 +22,7 @@ public class SecretManagerConfigurationProvider(string projectId, SecretManagerC
             try
             {
                 var secretVersionName = new SecretVersionName(projectId, secret.SecretName.SecretId, "latest");
-                var secretPayload = await secretManagerClient.AccessSecretVersionAsync(secretVersionName);
+                var secretPayload = await secretManagerServiceClient.AccessSecretVersionAsync(secretVersionName);
                 var secretData = secretPayload.Payload.Data.ToStringUtf8();
 
                 var key = _secretManager.GetKey(secret);
