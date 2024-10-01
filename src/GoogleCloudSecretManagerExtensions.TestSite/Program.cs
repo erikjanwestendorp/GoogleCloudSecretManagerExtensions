@@ -2,7 +2,10 @@ using GoogleCloudSecretManagerExtensions.TestSite.Compose;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.CreateUmbracoBuilder(true)
+builder
+    //.ConfigureGoogleCloudSecretManagerDefault()
+    .ConfigureGoogleCloudSecretManagerClientBuilder()
+    .CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()
     .AddComposers()
