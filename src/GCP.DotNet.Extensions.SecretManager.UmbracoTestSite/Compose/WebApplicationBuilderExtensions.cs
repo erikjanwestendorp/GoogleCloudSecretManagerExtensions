@@ -1,6 +1,6 @@
 ﻿using Google.Cloud.SecretManager.V1;
 
-namespace GoogleCloudSecretManagerExtensions.TestSite.Compose;
+namespace GCP.DotNet.Extensions.SecretManager.UmbracoTestSite.Compose;
 
 public static class WebApplicationBuilderExtensions
 {

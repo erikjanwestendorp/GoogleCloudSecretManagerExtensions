@@ -1,7 +1,7 @@
 ﻿using Google.Cloud.SecretManager.V1;
 using Microsoft.Extensions.Configuration;
 
-namespace GoogleCloudSecretManagerExtensions;
+namespace GCP.DotNet.Extensions.SecretManager;
 
 public class SecretManager
 {

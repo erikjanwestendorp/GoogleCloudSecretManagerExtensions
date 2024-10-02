@@ -1,4 +1,4 @@
-﻿namespace GoogleCloudSecretManagerExtensions;
+﻿namespace GCP.DotNet.Extensions.SecretManager;
 
 public class SecretManagerConfigurationOptions
 {
