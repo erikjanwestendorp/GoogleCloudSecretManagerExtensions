@@ -1,4 +1,4 @@
-﻿namespace GCP.DotNet.Extensions.SecretManager.UmbracoTestSite;
+﻿namespace GCP.DotNet.Extensions.SecretManager.Helpers;
 
 public static class ProjectConstants
 {
