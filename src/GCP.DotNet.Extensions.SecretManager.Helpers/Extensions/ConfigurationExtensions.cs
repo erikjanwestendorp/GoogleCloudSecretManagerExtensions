@@ -1,4 +1,6 @@
-﻿namespace GCP.DotNet.Extensions.SecretManager.UmbracoTestSite;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace GCP.DotNet.Extensions.SecretManager.Helpers.Extensions;
 
 public static class ConfigurationExtensions
 {
