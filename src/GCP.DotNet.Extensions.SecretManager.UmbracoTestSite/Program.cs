@@ -1,4 +1,4 @@
-using GoogleCloudSecretManagerExtensions.TestSite.Compose;
+using GCP.DotNet.Extensions.SecretManager.UmbracoTestSite.Compose;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

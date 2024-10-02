@@ -1,4 +1,4 @@
-﻿namespace GoogleCloudSecretManagerExtensions.TestSite;
+﻿namespace GCP.DotNet.Extensions.SecretManager.UmbracoTestSite;
 
 public static class ConfigurationExtensions
 {
