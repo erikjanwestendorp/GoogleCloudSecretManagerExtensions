@@ -1,0 +1,35 @@
+name: Publish Beta to NuGet
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*-beta*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore ./src/GCP.DotNet.Extensions.SecretManager/GCP.DotNet.Extensions.SecretManager.csproj
+
+    - name: Build project
+      run: dotnet build ./src/GCP.DotNet.Extensions.SecretManager/GCP.DotNet.Extensions.SecretManager.csproj --configuration Release --no-restore
+
+    - name: Pack project
+      run: dotnet pack ./src/GCP.DotNet.Extensions.SecretManager/GCP.DotNet.Extensions.SecretManager.csproj --configuration Release --no-build --output ./nupkg
+
+    - name: Publish to NuGet
+      run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      env:
+        NUGET_API_KEY: ${{secrets.NUGET_API_KEY}}
