@@ -1,5 +1,3 @@
-# GoogleCloudSecretManagerExtensions
-
 # Configure Google Secret Manager
 
 ## Install Key Vault via Nuget
