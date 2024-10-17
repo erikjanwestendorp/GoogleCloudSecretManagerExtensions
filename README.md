@@ -1,6 +1,6 @@
 # Configure Google Secret Manager
 
-## Install Key Vault via Nuget
+## Install Package via Nuget
 
 ## Install through command line
 
