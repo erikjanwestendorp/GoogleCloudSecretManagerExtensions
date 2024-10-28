@@ -1,7 +1,5 @@
 # Configure Google Secret Manager
 
-## Install Package via Nuget
-
 ## Install through command line
 
 Navigate to your project folder, which is the folder that contains your `.csproj` file. Now use the following `dotnet add package` command to install the packages:
