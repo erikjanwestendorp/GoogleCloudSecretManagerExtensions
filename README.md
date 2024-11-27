@@ -47,5 +47,5 @@ Ensure that your application has the appropriate permissions to access Google Cl
 # Contributing
 Contributions are welcome! If you encounter issues or have suggestions for improvements, please open an issue or submit a pull request.
 
-License
+# License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
