@@ -1,49 +1,51 @@
-# Configure Google Secret Manager
+# GCP.DotNet.Extensions.SecretManager 
+`GCP.DotNet.Extensions.SecretManager` is a .NET library designed to simplify the integration of Google Cloud Secret Manager into your .NET applications. It provides a straightforward way to access and manage secrets stored in Google Cloud Secret Manager, enhancing the security and maintainability of your applications.
 
-## Install through command line
-
-Navigate to your project folder, which is the folder that contains your `.csproj` file. Now use the following `dotnet add package` command to install the packages:
+## Installation
+To install the `GCP.DotNet.Extensions.SecretManager` library, add the package to your project using the .NET CLI:
 
 ```
-dotnet add package GCP.DotNet.Extensions.SecretManager
+dotnet add package GoogleCloudSecretManagerExtensions
 ```
 
-### Configuration
+Alternatively, you can add the package reference directly to your project file:
 
-The next step is to add the `ProjectId` to the `appsettings.json` file, like so: 
-
-```json
-{
-  "$schema": "appsettings-schema.json",
-  "SecretManager": {
-    "ProjectId": "{your_project_id}",
-  }
-}
+```
+<PackageReference Include="GoogleCloudSecretManagerExtensions" Version="1.0.0" />
 ```
 
-After adding the project id to this appsettings is't time to add some configuration so that the SecretManager is used. One way to achieve this is to create an extension method like so: 
+## Usage
+### Automatic Configuration Integration
+The library extends the `ConfigurationProvider` in .NET, allowing secrets to be automatically injected into your application's configuration. Once configured, your application can access secrets as if they were part of the app's standard configuration (e.g., appsettings.json).
+
+### Example
 
 ```csharp
-public static WebApplicationBuilder ConfigureGoogleCloudSecretManagerDefault(this WebApplicationBuilder builder)
-{
-    var projectId = builder.Configuration.GetConfiguredInstance<AppSettings.SecretManager>(ProjectConstants.SettingsSections.SecretManager).ProjectId;
-    
-    if (string.IsNullOrWhiteSpace(projectId))
-    {
-        throw new InvalidOperationException("ProjectId is not configured in appsettings.json under 'SecretManager:ProjectId'.");
-    }
+using Microsoft.Extensions.Configuration;
+using GoogleCloudSecretManagerExtensions;
 
-    builder.Configuration.AddGoogleCloudSecretManager(projectId);
+var builder = new ConfigurationBuilder();
 
-    return builder;
-}
+// Add Google Cloud Secret Manager as a configuration source
+builder.AddGoogleCloudSecrets("your-project-id");
+
+var configuration = builder.Build();
+
+// Access secrets from the configuration
+string secretValue = configuration["your-secret-id"];
+
+Console.WriteLine($"Retrieved secret from configuration: {secretValue}");
 ```
+### How It Works
+1. The `AddGoogleCloudSecrets` extension method integrates the Google Cloud Secret Manager as a configuration source.
+2. Secrets from Google Cloud Secret Manager are automatically loaded and made available through the `IConfiguration` interface.
+3. Secrets can be accessed just like any other configuration key/value pair.
 
-After creating the extension method, it's possible to call it from the Program.cs class, like so:
+## Authentication
+Ensure that your application has the appropriate permissions to access Google Cloud Secret Manager and that you've set up authentication using a service account. You can configure authentication by setting the `GOOGLE_APPLICATION_CREDENTIALS` environment variable.
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-...
-builder.ConfigureGoogleCloudSecretManagerDefault();
-...
-```
+# Contributing
+Contributions are welcome! If you encounter issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+License
+This project is licensed under the MIT License. See the LICENSE file for more details.
